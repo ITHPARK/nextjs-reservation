@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className='w-full h-20 fixed  '>
+    <header className='w-full h-20 fixed bg-white z-10 '>
         <div className='w-[768px] h-full mx-auto  flex align-center'>
 
             {/* 네비게이션 바 */}
