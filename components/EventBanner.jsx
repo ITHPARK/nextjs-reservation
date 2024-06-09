@@ -15,7 +15,10 @@ import { IoPauseOutline } from "react-icons/io5";
 const EventBanner = () => {
 
     const eventList = [1, 2, ,3, 4, 5];
+    const eventBanner = ["야놀자드로우", "쿠폰혜택모음", "이벤트더보기"];
     const [isPlaying, setIsPlaying] = useState(true);
+
+    //DOM 요소에 직접 접근하기 위함
     const swiperRef = useRef(null);
 
     const handlePlay = () => {
@@ -87,8 +90,20 @@ const EventBanner = () => {
                     <div className='event-pagination w-auto text-[12px]'></div>    
                     <button className='event_button_next'><FaAngleRight  size={16} color='#1a1a1a'/></button>
                 </div>
-                
-            </div>       
+            </div>    
+
+            <div className='mt-[15px] px-[20px] flex gap-[5px]'>
+                {
+                    eventBanner.map((item, idx) => {
+                        return (
+                            <button key={item} className='flex-1 flex justify-center items-center gap-[3px] leading-[45px] bg-[#f8f8f8] rounded-[5px]'>
+                                <img src={`/images/event/event_banner${idx+1}.png`} alt={item} className='w-[18px] '/>
+                                <span className='text-[12px]'>{item}</span>
+                            </button>
+                        )
+                    })
+                }
+            </div>   
     </section>
   )
 }

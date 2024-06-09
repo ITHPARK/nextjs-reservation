@@ -1,8 +1,8 @@
 const baseUrl:string = "https://apis.data.go.kr/B551011/KorService1/"
 const apiKey:string = "IX0c2Gu6RtHnNRi9a%2FuQ2rn0XyAMW9qgf4LVog5flz9mgTGcmhTpxtjCajWzwhpdKk0jJpAOA4%2B28F280wQHfA%3D%3D";
 
-const fetchData = async (fetchUrl: any) => {
-
+//areacode?: number => ?는 선택적인 파라미터. 즉 없어도 됨
+const fetchData = async (fetchUrl: any, areacode?: number) => {
     try  {
 
         //url생성자(URL 타입)

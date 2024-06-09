@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Category from "@/components/Category";
 import EeventBanner from "@/components/EventBanner";
+import RecentlyView from "@/components/RecentlyView";
 
 
 const Home = async () => {
@@ -10,6 +11,7 @@ const Home = async () => {
     <div className="w-full pt-[140px]" >
         <Category/>
         <EeventBanner/>
+        <RecentlyView/>
     </div>
   );
 }
