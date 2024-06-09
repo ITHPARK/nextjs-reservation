@@ -40,7 +40,7 @@ const HotDeal = async() => {
             dataList.map((val:Location) => {
               return (
                 <SwiperSlide key={val.title}>
-                  <div className={`w-full min-h-[106px]  bg-cover bg-center`}>
+                  <div className={`w-full min-h-[106px] bg-[url(${val.firstimage})]  bg-cover bg-center`}>
                     
                   </div>
                   <p>{val.title}</p>
