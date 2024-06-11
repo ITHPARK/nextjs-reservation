@@ -7,7 +7,11 @@ const layout = ({children} : {
 }) => {
   return (
     <div className="w-full h-full">
-      {children}
+      <Header></Header>  
+      <div className='w-[768px] mx-auto'>
+        {children}
+      </div>
+      
     </div>
   )
 }

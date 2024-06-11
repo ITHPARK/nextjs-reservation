@@ -15,9 +15,9 @@ const RecentlyView:React.FC = () => {
             <Link href="" className='text-[12px] text-[#0152cc] font-semibold'>전체보기</Link>
         </div>
 
-        <ul>
-
-        </ul>
+        <div className='h-[120px] flex items-center justify-center rounded-[10px] bg-[#f8f8f8]' >
+          <p className='text-[12px]'>최근 본 상품이 없습니다.</p>
+        </div>
         
     </section>
   )

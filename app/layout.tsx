@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}
+      <body>
+        <Header></Header>
+        <div className='w-[768px] mx-auto'>
+          {children}
+        </div>
       </body>
     </html>
   );

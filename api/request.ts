@@ -29,7 +29,7 @@ const request: Request =  {
     stay: {
         category: "searchStay1",
         params: new URLSearchParams({
-            numOfRows: "10",
+            numOfRows: "50",
             pageNo: "1",
             MobileOS: "ETC",
             MobileApp: "APPtest",
