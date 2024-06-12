@@ -31,3 +31,9 @@ export interface ApiResponse {
 export interface rowProps {
   rowData: StayInfo[];
 }
+
+
+export interface RowsAnotherProps {
+  topStay: StayInfo[][];
+}
+

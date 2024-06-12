@@ -103,6 +103,16 @@
     }
   }
 
+  @layer components {
+    .after-transition {
+      @apply transition-opacity duration-1000;
+    }
+  }
+
   
   .event_swiper .swiper-wrapper {margin-left: 30px;}
   .event_swiper .swiper-slide {border-radius: 5px;overflow: hidden;}
+
+  .top-pagination {margin-bottom: 20px;}
+  .top-pagination span {width: auto; height: auto; padding: 8px 20px; font-size: 12px; font-weight: 400; color: #6D6D6D; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 20px; opacity: 1;}
+  .top-pagination span.swiper-pagination-bullet-active {font-weight: 600; color: #0152cc;  background-color: #e6eefa; border: 1px solid #fff;}

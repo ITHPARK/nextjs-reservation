@@ -10,6 +10,11 @@ const apiKey:string = "IX0c2Gu6RtHnNRi9a%2FuQ2rn0XyAMW9qgf4LVog5flz9mgTGcmhTpxtj
 export const fetchData = async (fetchUrl: FetchUrl, areacode?: number) => {
     try  {
 
+        if(areacode) {
+          fetchUrl.params.set('areaCode', areacode.toString());
+        }
+      
+
         //url생성자(URL 타입)
         const url: URL = new URL(baseUrl);
 

@@ -48,7 +48,7 @@ const Rows:React.FC<rowProps> = ({
               if(index <= 10) {
                 return (
                   <SwiperSlide key={index}>
-                    <div className='w-full min-h-[106px] bg-cover bg-center rounded-[5px]' style={{ backgroundImage: `url(${item.firstimage})` }}></div>
+                    <div className='w-full min-h-[150px] bg-cover bg-center rounded-[5px]' style={{ backgroundImage: `url(${item.firstimage})` }}></div>
                     <p className='mt-[5px] px-[4px] text-[14px] font-[500]'>{truncateTitle(item.title, 10)}</p>
                     <p className='mt-[3px] flex items-center text-[12px] font-[600]'>
                       <span className='w-[12px] h-[12px] inline-block'>

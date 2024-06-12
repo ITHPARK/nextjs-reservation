@@ -35,7 +35,7 @@ const EventBanner = () => {
 
 
   return (
-    <section className='mb-[30px]'>
+    <section className='mb-[50px]'>
         <div className='w-full relative mb-4'>
         <Swiper 
                     className='event_swiper'
