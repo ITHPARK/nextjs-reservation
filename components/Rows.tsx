@@ -1,14 +1,13 @@
 "use client"
+
 import React, {useState, useEffect} from 'react';
-import Link from 'next/link';
-import request from '@/api/request';
-import { fetchData } from '@/api/fetchData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
-import {StayInfo, Location, rowProps} from '@/types/types';
+import {StayInfo, rowProps} from '@/types/types';
 import {useRouter} from 'next/navigation'
+
 
 
 const Rows:React.FC<rowProps> = ({
@@ -19,10 +18,11 @@ const Rows:React.FC<rowProps> = ({
   const [data, setData] = useState<StayInfo[]>([]);
 
   useEffect(() => {
-    // rowData가 존재하고 배열이면 setData를 호출하여 data 상태를 업데이트
+   
     if (Array.isArray(rowData)) {
       setData(rowData);
     }
+
   }, [rowData]); // rowData가 변경될 때 useEffect가 호출되도록 설정
 
   const {push} = useRouter();

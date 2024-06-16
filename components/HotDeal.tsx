@@ -1,12 +1,10 @@
 "use client"
 
 import React, {useState, useEffect} from 'react'
-import Link from "next/link"
 import Rows from "@/components/Rows"
-import {fetchData} from "@/api/fetchData";
-import request from "@/api/request";
 import {useRouter} from 'next/navigation'
 import {StayInfo} from '@/types/types';
+import { useStayData } from '@/store/store';
 
 const HotDeal = () => {
 
@@ -15,19 +13,21 @@ const HotDeal = () => {
     //페이지 이동을 위한
     const {push} = useRouter();
 
-    const fetchStay = async() => {
-      const res = await fetchData(request.stay);
-      setData(res);
-    }
+    //store에서 가져온 값
+    const { stayData } = useStayData();
+
 
     const onClickViewAll = () => {
       push('/recommend/list');
     }
 
     useEffect(() => {
-      fetchStay();
       
-    },[])
+      if(stayData.length > 0) {
+        setData(stayData);
+      }
+  
+    },[stayData]);
 
   return (
     <section className=' mb-[50px] px-[20px]'>

@@ -41,3 +41,10 @@ export interface EventClick {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
+
+export interface Store {
+  stayData: StayInfo[];
+  fetchStayData: (url: FetchUrl, areacode?: number) => Promise<void>;
+  // loadStoredData: () => StayInfo[];
+}
+

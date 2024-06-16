@@ -14,12 +14,12 @@ interface RequestParams {
 }
 
 //category의 타입
-interface RequestCategory {
+export interface RequestCategory {
     category: string;
     params: URLSearchParams;
 }
 
-interface Request {
+export interface Request {
     stay: RequestCategory;
 }
 

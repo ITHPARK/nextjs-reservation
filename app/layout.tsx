@@ -6,6 +6,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import Providers from "@/provider/Providers";
+import StoreProvider from "@/store/StoreProvider";
 
 
 export const metadata: Metadata = {
@@ -22,12 +23,12 @@ export default function RootLayout({
     <html lang="en">
       {/* react-query를 이용하기 위해 묶어줌 context와 같은 개념 */}     
         <body>
-          {/* <Providers> */}
+          <StoreProvider>
             <Header></Header>
             <div className='w-[768px] mx-auto'>
               {children}
             </div>
-          {/* </Providers> */}
+          </StoreProvider>
         </body>
      
     </html>
