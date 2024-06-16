@@ -37,3 +37,7 @@ export interface RowsAnotherProps {
   topStay: StayInfo[][];
 }
 
+export interface EventClick {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+

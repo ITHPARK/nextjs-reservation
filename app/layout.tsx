@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
-
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import Providers from "@/provider/Providers";
 
 
 export const metadata: Metadata = {
@@ -16,12 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header></Header>
-        <div className='w-[768px] mx-auto'>
-          {children}
-        </div>
-      </body>
+      {/* react-query를 이용하기 위해 묶어줌 context와 같은 개념 */}     
+        <body>
+          {/* <Providers> */}
+            <Header></Header>
+            <div className='w-[768px] mx-auto'>
+              {children}
+            </div>
+          {/* </Providers> */}
+        </body>
+     
     </html>
   );
 }

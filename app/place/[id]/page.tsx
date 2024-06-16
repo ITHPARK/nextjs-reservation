@@ -1,16 +1,28 @@
-import Image from "next/image";
-import Category from "@/components/Category";
-import EeventBanner from "@/components/EventBanner";
-import RecentlyView from "@/components/RecentlyView";
-import HotDeal from "@/components/Rows";
-import { fetchData } from "@/api/fetchData";
-import request from "@/api/request"
+'use client'
+
+import React, {useState, useEffect} from 'react';
+import StayResult from "@/components/StayResult";
+import {StayInfo} from "@/types/types";
+import { useRouter } from "next/navigation";
+
+
+interface RouterQuery  {
+
+  //데이터가 있다면 StayInfo
+  data?: StayInfo; 
+
+}
 
 const Home = () => {
+  
+  const [stayData, setStayData] = useState<StayInfo | null>(null);
+
+  const router = useRouter();
+
 
   return (
     <div className="w-full pt-[140px]" >
-     
+      <StayResult data={stayData}/>
     </div>
   );
 }

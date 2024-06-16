@@ -26,7 +26,8 @@ const HotDeal = () => {
 
     useEffect(() => {
       fetchStay();
-    })
+      
+    },[])
 
   return (
     <section className=' mb-[50px] px-[20px]'>

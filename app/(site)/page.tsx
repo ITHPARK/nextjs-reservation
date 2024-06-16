@@ -8,8 +8,14 @@ import request from "@/api/request"
 import Footer from "@/components/Footer";
 import Top from "@/components/Top";
 import Exhibition from "@/components/Exhibition";
+import { useQuery } from '@tanstack/react-query';
+
 
 const Home = () => {
+
+  //최최 진입시 데이터 생성
+
+
 
   return (
     <div className="w-full pt-[140px]" >
@@ -21,6 +27,8 @@ const Home = () => {
         <Top/>
         <Exhibition/>
         <Footer/>
+
+      
     </div>
   );
 }

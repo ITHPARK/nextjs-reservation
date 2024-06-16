@@ -10,8 +10,9 @@ const Top = async() => {
 
   const data = await fetchData(request.stay, 1)
 
+  //증첩배열
+  const topStay: any[][] = [];
 
-  const topStay: any[] = [];
   let tempArr: StayInfo[] = [];
 
   data.forEach((item: StayInfo, index: number) => {
