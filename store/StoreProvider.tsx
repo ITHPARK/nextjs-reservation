@@ -15,8 +15,6 @@ const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     if (stayData.length === 0) {
       console.log("데이터 없음");
       fetchStayData(request.stay as FetchUrl);
-    } else {
-      console.log("데이터 있음");
     }
   }, [stayData, fetchStayData]);
 

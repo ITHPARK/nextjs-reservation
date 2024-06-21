@@ -8,7 +8,7 @@ const layout = ({children} : {
   return (
     <div className="w-full h-full">
       <Header></Header>  
-      <div className='w-[768px] mx-auto'>
+      <div className='mx-auto max-w-[768px] w-[100%]'>
         {children}
       </div>
       

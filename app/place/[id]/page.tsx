@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import StayResult from "@/components/StayResult";
 import {StayInfo} from "@/types/types";
-import { useRouter } from "next/navigation";
+
 
 
 interface RouterQuery  {
@@ -15,14 +15,12 @@ interface RouterQuery  {
 
 const Home = () => {
   
-  const [stayData, setStayData] = useState<StayInfo | null>(null);
 
-  const router = useRouter();
 
 
   return (
-    <div className="w-full pt-[140px]" >
-      <StayResult data={stayData}/>
+    <div className="w-full pt-[70px]" >
+      <StayResult/>
     </div>
   );
 }

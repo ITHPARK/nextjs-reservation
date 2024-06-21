@@ -5,11 +5,14 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { LuShoppingCart } from "react-icons/lu";
 import { IoIosSearch } from "react-icons/io";
 import Link from 'next/link';
+import {usePathname} from 'next/navigation';
 
 const Header = () => {
 
     const [headerY, setHeaderY] = useState(0);
     const [border, setBorder] = useState(false);
+
+    const pathname = usePathname();
 
     const onScroll = () => {
         setHeaderY(window.scrollY);
@@ -48,7 +51,7 @@ const Header = () => {
                 <RxHamburgerMenu size={32} color='#000' className='p-[5px]'/>
                 
                 <div className='flex-1 relative h-full'>
-                <div className={`w-full text-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${headerY > 1 ? "top-[-76px]" : "top-0"} bg-[#fff]`}>
+                <div className={`w-full text-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${headerY > 1 ? "top-[-76px]" : "top-0" } ${pathname =='/' ? "" : "hidden" } bg-[#fff] `}>
                         <div className="pt-8 pb-4 w-[200px] inline-block relative" >
                             <img src="/images/logo_yanolja.png" alt="" />
                         </div>

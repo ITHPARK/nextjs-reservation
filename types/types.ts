@@ -1,9 +1,9 @@
 //새로 들어올 객체의 타입도 정의 해줘야함
 //숙소 정보를 받아서 가격과 평점까지 추가할 타입
 export interface StayInfo {
-   [key: string]: string;
-   price: string;
-   rating: string;
+  [key: string]: string; //
+  price: string;
+  rating: string;
 }
 
 
@@ -48,3 +48,15 @@ export interface Store {
   // loadStoredData: () => StayInfo[];
 }
 
+//void 타입은 함수 반환값이 없음을 표시
+export interface DateRangePickerProps  {
+  onChange: (dates: Date | null) => void;
+}
+
+// 달력에서 받는 Props들
+export interface DatePickerCustomProps {
+  setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  pickerStartDate: Date| null;
+  pickerEndDate: Date| null;
+}

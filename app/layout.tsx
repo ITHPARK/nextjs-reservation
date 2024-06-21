@@ -19,18 +19,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  
+
   return (
     <html lang="en">
       {/* react-query를 이용하기 위해 묶어줌 context와 같은 개념 */}     
         <body>
           <StoreProvider>
             <Header></Header>
-            <div className='w-[768px] mx-auto'>
+            <div className='mx-auto max-w-[768px] w-[100%]'>
               {children}
             </div>
           </StoreProvider>
         </body>
-     
     </html>
   );
 }

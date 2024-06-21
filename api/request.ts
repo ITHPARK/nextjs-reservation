@@ -1,17 +1,5 @@
 // request 객체의 타입 정의
 
-//params의 타입
-interface RequestParams {
-    numOfRows: string;
-    pageNo: string;
-    MobileOS: string;
-    MobileApp: string;
-    _type: string;
-    listYN: string;
-    arrange: string;
-    areaCode?: string;
-    sigunguCode?: string;
-}
 
 //category의 타입
 export interface RequestCategory {
@@ -22,7 +10,6 @@ export interface RequestCategory {
 export interface Request {
     stay: RequestCategory;
 }
-
 
 const request: Request =  {
 
