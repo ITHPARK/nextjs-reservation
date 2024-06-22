@@ -59,4 +59,16 @@ export interface DatePickerCustomProps {
   setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
   pickerStartDate: Date| null;
   pickerEndDate: Date| null;
+  refSize?: number;
+  buttonStartDate?: string;
+  buttonEndDate?: string;
 }
+
+export interface GuestsNumberProps {
+  refSize?: number;
+  adult?: number;
+  child?: number;
+  setAdult: React.Dispatch<React.SetStateAction<number>>;
+  setChild: React.Dispatch<React.SetStateAction<number>>;
+}
+

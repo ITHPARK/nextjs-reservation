@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState, useEffect, useRef } from 'react'
-import { IoMdInformationCircleOutline, IoMdInformationCircle } from "react-icons/io";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 import { BsPeople } from "react-icons/bs";
 import { MdOutlineBedroomChild } from "react-icons/md";
@@ -10,7 +10,7 @@ import { useStayData } from '@/store/store';
 import { usePathname } from 'next/navigation'
 import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
-import { IoShareSocialOutline, IoClose  } from "react-icons/io5";
+import { IoShareSocialOutline  } from "react-icons/io5";
 import { SlPresent } from "react-icons/sl";
 import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
@@ -24,7 +24,8 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "@/components/ui/drawer"
-  import DatePickerCustom from "@/components/DatePickerCustom";
+import DatePickerCustom from "@/components/DatePickerCustom";
+import GuestsNumber from '@/components/GuestsNumber';
 
 
 
@@ -53,6 +54,12 @@ const StayResult = () => {
     const [buttonEndDate, setButtonEndDate] = useState<string>();
     const [night, setNight] = useState(0);
 
+    //shadcn 컴포넌트 트리거 각각 나누기
+    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+    //인원수 선택
+    const [adult, setAdult] = useState(2);
+    const [child, setChild] = useState(0);
 
 
     const resizeListener = () => {
@@ -120,8 +127,8 @@ const StayResult = () => {
         const end = pickerEndDate
         let formattedStartDate = '';
         let formattedEndDate = '';
+        
 
-    
          /*
             유효한 날짜인지 확인하는 함수
             date가 Date 객체인지 확인
@@ -149,6 +156,7 @@ const StayResult = () => {
             formattedEndDate = new Intl.DateTimeFormat('ko-KR', dateFormatOptions as {}).format(end);
         }
 
+
         setButtonStartDate(formattedStartDate)
         setButtonEndDate(formattedEndDate)
 
@@ -166,7 +174,7 @@ const StayResult = () => {
         //뺀 숫자를 일수 단위로 계산.
         const daysDifference = timeDifference / (1000 * 3600 * 24);
         
-        return Math.floor(Math.max(daysDifference, 0)); 
+        return Math.ceil(Math.max(daysDifference, 0)); 
     };
     
 
@@ -229,9 +237,17 @@ const StayResult = () => {
             <div className='mt-[40px] mb-[20px] px-[10px] '>
                 <h4 className='mb-[10px] text-[18px] font-[600]'>객실선택</h4>
                 <div className='flex border-[1px] border-solid border-[#b1b1b1] rounded-[5px] overflow-hidden'>
-                    <DrawerTrigger className='p-[10px] w-[65%] text-left border-[1px] border-solid border-r-[#b1b1b1] text-[12px] font-[600]'>{buttonStartDate}~{buttonEndDate} / {night}박</DrawerTrigger>
+                    <DrawerTrigger  asChild>
+
+                        <button className='p-[10px] w-[65%] text-left border-[1px] border-solid border-r-[#b1b1b1] text-[14px] font-[600]' onClick={() => setIsDrawerOpen(true)}>{buttonStartDate}~{buttonEndDate} / {night}박</button>
+                      
+                    </DrawerTrigger>
                     
-                    <button className='p-[10px] flex-1 text-left text-[12px] font-[600]'>성인 2, 아동 0</button>
+                    <DrawerTrigger asChild className='flex-1 '>
+                    <button className='p-[10px] text-left text-[14px] font-[600]' onClick={() => setIsDrawerOpen(false)}>성인 {adult}, 아동 {child} </button>
+
+                    </DrawerTrigger>
+                    
                 </div>
             </div>
             <div className='px-[10px] pb-[20px] flex flex-col border-b-[1px] border-[]'>
@@ -281,31 +297,30 @@ const StayResult = () => {
             </div>
         </div>
 
+
+        {
+            isDrawerOpen ?
+            <DatePickerCustom 
+                pickerStartDate = {pickerStartDate}
+                pickerEndDate = {pickerEndDate}
+                setStartDate = {setStartDate}
+                setEndDate = {setEndDate}    
+                refSize = {refSize}     
+                buttonStartDate ={buttonStartDate}
+                buttonEndDate = {buttonEndDate}
+            />
+           :
         
-        <DrawerContent className={`w-[100%] max-w-[768px] left-[50%]`} style={{ marginLeft: `-${refSize}px` }}>
-            <DrawerHeader>
-                <DrawerTitle className='mb-[20px] text-center  text-[18px]'>날짜 선택</DrawerTitle>
-                <p className='p-[10px] flex items-center gap-[5px] text-[12px] text-center bg-[#f1f1f1] rounded-[5px]'><span className='w-[16px]'><IoMdInformationCircle size="100%" fill='#1A1A1A' /></span> 이 숙소는 최대 9박 까지 예약할 수 있어요</p>
-                <DrawerDescription>
-                    <div className='stay_reservation'>
-                        <DatePickerCustom 
-                            setStartDate={setStartDate}
-                            setEndDate={setEndDate}
-                            pickerStartDate={pickerStartDate}
-                            pickerEndDate={pickerEndDate}
-                        />
-                    </div>
-                </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter>
-            <div className='flex justify-center'>
-                <button className=' py-[10px] max-w-[500px] w-full inlin-block text-[16px] text-[#fff] text-center font-[600] bg-[#d20d5a] hover:bg-[#b1244c] rounded-[5px] '>{buttonStartDate} {buttonEndDate ? `~ ${buttonEndDate}` : ''} 예약하기</button>
-            </div> 
-            <DrawerClose className='w-[24px] absolute left-2 top-2'>
-                <IoClose size="100%" fill='#1a1a1a'/>
-            </DrawerClose>
-            </DrawerFooter>
-        </DrawerContent>
+            <GuestsNumber
+                refSize = {refSize}  
+                adult = {adult}
+                child = {child}
+                setAdult = {setAdult}
+                setChild = {setChild}
+            />
+        }
+
+    
         </Drawer>
     </section>
   )
