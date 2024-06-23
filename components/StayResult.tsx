@@ -24,8 +24,13 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "@/components/ui/drawer"
+  import {
+    AlertDialog,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
 import DatePickerCustom from "@/components/DatePickerCustom";
 import GuestsNumber from '@/components/GuestsNumber';
+import ReservationAlert from "@/components/ReservationAlert";
 
 
 
@@ -61,9 +66,41 @@ const StayResult = () => {
     const [adult, setAdult] = useState(2);
     const [child, setChild] = useState(0);
 
+    //예약날짜가 오늘인지 비교해서 모달 열기
+    const [isOpen, setIsOpen] = useState(false)
+    const [modalControl, setModalControl] = useState(2);
+
+
+     //tailwind css 동적할당을 위한 객체
+     type viewType = Record<number, string>;
+     const view: viewType = {
+         1: 'flex opacity-[1]',
+         2: 'hidden opacity-[0]',
+     };
+ 
+
+
+    const handleClickReservation = () => {
+        const today = new Date();
+
+        if (pickerStartDate) {
+            const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
+            const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
+            const isSameDay = today.getDate() === pickerStartDate.getDate();
+
+            if (isSameYear && isSameMonth && isSameDay) {
+                setIsOpen(true);
+                setModalControl(1);
+            } else {
+                setIsOpen(false);
+                setModalControl(2);
+            }
+        }
+    }
+
+
 
     const resizeListener = () => {
-
         // DrawerContent가 렌더링된 후에 ref를 확인한다.
         const currentRef = sizeRef.current;
         
@@ -127,7 +164,7 @@ const StayResult = () => {
         const end = pickerEndDate
         let formattedStartDate = '';
         let formattedEndDate = '';
-        
+
 
          /*
             유효한 날짜인지 확인하는 함수
@@ -135,9 +172,9 @@ const StayResult = () => {
             getTime() 메서드를 호출하여 해당 날짜와 시간을 밀리초 단위의 숫자 값으로 반환
             만약 날짜가 유효하지 않다면, getTime()은 NaN을 반환
          */
-            const isValidDate = (date : Date | null) => {
-                return date instanceof Date && !isNaN(date.getTime());
-             };
+        const isValidDate = (date : Date | null) => {
+            return date instanceof Date && !isNaN(date.getTime());
+        };
 
 
         const dateFormatOptions = {
@@ -189,7 +226,7 @@ const StayResult = () => {
     <section className=' mb-[50px] '>
 
         <Drawer>
-        
+     
         <div ref={sizeRef}>
             <div className={`mb-[40px] w-full h-[50vh] relative overflow-hidden`} >
                 <img src={placeData ? placeData.firstimage : ''} alt=""  className='left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] inline-block absolute ' />
@@ -238,14 +275,11 @@ const StayResult = () => {
                 <h4 className='mb-[10px] text-[18px] font-[600]'>객실선택</h4>
                 <div className='flex border-[1px] border-solid border-[#b1b1b1] rounded-[5px] overflow-hidden'>
                     <DrawerTrigger  asChild>
-
                         <button className='p-[10px] w-[65%] text-left border-[1px] border-solid border-r-[#b1b1b1] text-[14px] font-[600]' onClick={() => setIsDrawerOpen(true)}>{buttonStartDate}~{buttonEndDate} / {night}박</button>
-                      
                     </DrawerTrigger>
                     
                     <DrawerTrigger asChild className='flex-1 '>
-                    <button className='p-[10px] text-left text-[14px] font-[600]' onClick={() => setIsDrawerOpen(false)}>성인 {adult}, 아동 {child} </button>
-
+                        <button className='p-[10px] text-left text-[14px] font-[600]' onClick={() => setIsDrawerOpen(false)}>성인 {adult}, 아동 {child} </button>
                     </DrawerTrigger>
                     
                 </div>
@@ -288,7 +322,7 @@ const StayResult = () => {
                                 </div>
                                 <div className='mt-[15px] flex justify-end gap-[10px]'>
                                     <button className='w-[32px] p-[5px] inline-block border-[1px] border-solid border-[#b1b1b1] rounded-[4px] '><LuShoppingCart size="100%" color='#000'/></button>
-                                    <button className='min-w-[120px] bg-[#d20d5a] text-[12px] text-[#fff] rounded-[3px]' >예약하기</button>
+                                    <button className='min-w-[120px] bg-[#d20d5a] text-[12px] text-[#fff] rounded-[3px]'  onClick={handleClickReservation}>예약하기</button>
                                 </div>
                             </div>
                         </div>
@@ -297,6 +331,8 @@ const StayResult = () => {
             </div>
         </div>
 
+        
+  
 
         {
             isDrawerOpen ?
@@ -321,7 +357,17 @@ const StayResult = () => {
         }
 
     
+        
         </Drawer>
+
+        <div className={`w-full h-full ${view[modalControl]} justify-center items-center fixed left-0 top-0 bg-bgModal transition-[all] z-100 `}>
+            <ReservationAlert 
+                setModalControl = {setModalControl}
+            />
+        </div>
+        
+        
+       
     </section>
   )
 }

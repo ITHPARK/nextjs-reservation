@@ -66,10 +66,7 @@ const Exhibition = () => {
                         <div className='flex items-center text-[12px] text-[#fff]'>
                           {index+1}/{imgArr.length}
                         </div>
-                        
                       </div>
-
-                      
                     </div>
                   </SwiperSlide>
                 )

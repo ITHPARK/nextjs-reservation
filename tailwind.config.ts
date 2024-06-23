@@ -25,6 +25,9 @@ const config = {
         "custom-gradient" : "linear-gradient(90deg, #5177f0, #a46dc5 33.5%, #fb5a90 67.5%, #ff3478)",
         "custom-gradient2" : "linear-gradient(180deg,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 40%,rgba(0,0,0,.8))"
       },
+      backgroundColor: {
+        "bgModal" : "rgba(0, 0, 0, 0.8)"
+      },
       colors: {
         "text-grayFont1": "#8a8a8a",
         border: "hsl(var(--border))",
