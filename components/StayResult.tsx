@@ -84,6 +84,7 @@ const StayResult = () => {
         const today = new Date();
 
         if (pickerStartDate) {
+            //년 월 일을 모두 비교
             const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
             const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
             const isSameDay = today.getDate() === pickerStartDate.getDate();
