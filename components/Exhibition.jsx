@@ -55,7 +55,7 @@ const Exhibition = () => {
             {
               imgArr.map((item, index) => {
                 return (
-                  <SwiperSlide key={index}>
+                  <SwiperSlide key={item.tit}>
                     <img src={item.imgUrl} alt='exhibition' />
                     <div className='p-[15px] w-full h-full flex flex-col justify-end absolute left-0 top-0 bg-custom-gradient2'>
                       <div className='flex justify-between'>

@@ -76,11 +76,13 @@ const Header = () => {
 
     useEffect(() => {
 
-        console.log(pathname)
+        
         if(pathname === "/recommend/list"){
             setHeaderTit("핫딜");
         }else if(pathname === "/recommend/ranking") {
             setHeaderTit("TOP 숙소");
+        }else if(pathname === "/recommend/recently") {
+            setHeaderTit("최근 본 숙소");
         }
     }, [pathname])
 

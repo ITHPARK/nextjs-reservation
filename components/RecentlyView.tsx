@@ -14,17 +14,18 @@ const RecentlyView:React.FC = () => {
 
 
   const [recentlyData, setRecentlyData] = useState<StayInfo[]>([]);
-  const storedData = localStorage.getItem("recently");
+  
   
 
   useEffect(() => {
+    const storedData = localStorage.getItem("recently");
 
     if (storedData) {
       const parseData: StayInfo[] = JSON.parse(storedData);
       setRecentlyData(parseData);
   }
 
-  }, [storedData])
+  }, [])
   
 
 
@@ -37,7 +38,7 @@ const RecentlyView:React.FC = () => {
         </div>
     
         {
-          storedData ? 
+          recentlyData?  
 
           <div className='relative'>
             <Swiper 
@@ -58,7 +59,7 @@ const RecentlyView:React.FC = () => {
                 recentlyData.map((item: StayInfo, index: number) => {
                   if(index <= 10) {
                     return (
-                      <SwiperSlide className='flex  border-[1px] border-solid border-[#ddd] rounded-[8px]' key={item.contentid}>
+                      <SwiperSlide className='flex  border-[1px] border-solid border-[#ddd] rounded-[8px] overflow-hidden' key={item.contentid}>
                         <div className='w-[76px] h-[76px] bg-cover bg-center' style={{backgroundImage: `url(${item.firstimage})`}}>
                           
                         </div>

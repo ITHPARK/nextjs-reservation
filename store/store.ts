@@ -2,7 +2,7 @@ import create from 'zustand';
 import { FetchUrl, Store } from  '@/types/types';
 import {fetchData} from '@/api/fetchData';
 import request from '@/api/request';
-import {StayInfo} from '@/types/types';
+import {StayInfo, TopStayStore} from '@/types/types';
 import { persist } from "zustand/middleware";
 
 export const useStayData = create(
@@ -26,3 +26,13 @@ export const useStayData = create(
   )
 );
 
+
+
+export const useTopStay= create<TopStayStore>(
+  (set) => ({
+    topStay: [],
+    setStay: (arr: StayInfo[][]) => {
+      set({ topStay: arr });
+    }
+  })
+);

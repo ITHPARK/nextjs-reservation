@@ -2,20 +2,26 @@
 
 import React, {useState, useEffect} from 'react';
 import Link from 'next/link';
-import request from '@/api/request';
-import {fetchData} from '@/api/fetchData';
 import RowsAnother from '@/components/RowsAnother';
 import {StayInfo} from '@/types/types';
-import { useStayData } from '@/store/store';
+import { useStayData, useTopStay } from '@/store/store';
+import {useRouter} from 'next/navigation'
+
 
 const Top = () => {
 
   const [data, setData] = useState<StayInfo[][]>([]);
 
   const { stayData } = useStayData();
+  const { setStay } = useTopStay();
+  
 
-
-  // const data = await fetchData(request.stay, 1)
+  //페이지 이동을 위한
+  const {push} = useRouter();
+  
+  const onClickViewAll = () => {
+    push('/recommend/ranking');
+  }
 
   useEffect(() => {
       
@@ -38,10 +44,13 @@ const Top = () => {
         }
       });  
 
+      setStay(topStay);
       setData(topStay);
+
     }
 
-  },[stayData]);
+    //setStay가 호출될 때 마다 콜백실행
+  },[stayData, setStay]);
   
   //증첩배열
   
@@ -52,7 +61,7 @@ const Top = () => {
     <section className='mb-[50px] px-[20px]'>
          <div className='mb-4  flex justify-between items-center font-semibold '>
             <h2 className='text-[18px] text-[#1a1a1a]'>숙소 구매 TOP</h2>
-            <Link href="" className='text-[12px] text-[#0152cc] font-semibold'>전체보기</Link>
+            <span className='text-[12px] text-[#0152cc] font-semibold cursor-pointer' onClick={onClickViewAll}>전체보기</span>
         </div>
         <RowsAnother topStay={data} />
     </section>

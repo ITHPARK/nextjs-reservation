@@ -5,12 +5,13 @@ import RecentlyView from "@/components/RecentlyView";
 import HotDeal from "@/components/Rows";
 import { fetchData } from "@/api/fetchData";
 import request from "@/api/request"
+import TopAll from "@/components/TopAll";
 
 const Ranking = () => {
 
   return (
-    <div className="w-full pt-[140px]" >
-     
+    <div className="w-full pt-[50px]" >
+      <TopAll />
     </div>
   );
 }

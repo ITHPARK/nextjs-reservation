@@ -32,6 +32,10 @@ export interface rowProps {
   rowData: StayInfo[];
 }
 
+export interface rowProps2 {
+  rowData: StayInfo[][];
+}
+
 
 export interface RowsAnotherProps {
   topStay: StayInfo[][];
@@ -46,6 +50,11 @@ export interface Store {
   stayData: StayInfo[];
   fetchStayData: (url: FetchUrl, areacode?: number) => Promise<void>;
   // loadStoredData: () => StayInfo[];
+}
+
+export interface TopStayStore {
+  topStay: StayInfo[][],
+  setStay: (arr: StayInfo[][]) => void;
 }
 
 //void 타입은 함수 반환값이 없음을 표시

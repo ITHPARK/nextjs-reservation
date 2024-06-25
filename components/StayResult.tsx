@@ -152,6 +152,12 @@ const StayResult = () => {
 
                         if(idx == -1) {
                             parseData.push(viewDate); 
+
+                            //10개 이상이면 첫번쨰 요소 제거
+                            if(parseData.length > 10){
+                                parseData.shift();
+                            }
+
                             localStorage.setItem("recently", JSON.stringify(parseData));
                             console.log(storedData);
                         }
@@ -162,10 +168,6 @@ const StayResult = () => {
                     
                 }
 
-                
-
-                
-                
                 
             } else {
                 // 맞는 데이터가 없는경우  = -1 리턴했을 때
