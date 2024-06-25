@@ -1,14 +1,17 @@
 "use client"
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {StayInfo, rowProps2} from '@/types/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import clsx from 'clsx';
+import {useRouter} from 'next/navigation'
 
 
 const StayListCat:React.FC<rowProps2> = ({rowData}) => {
 
     const [data, setData] = useState<StayInfo[][]>([]);
+
+    const {push} = useRouter();
 
     const boxStyleClass= clsx(
         'p-[10px]',
@@ -27,6 +30,15 @@ const StayListCat:React.FC<rowProps2> = ({rowData}) => {
           console.log('rowData가 없습니다');
         }
       }, [rowData]);
+
+
+      const handleClick: React.MouseEventHandler<HTMLDivElement> =  useCallback((event) => {
+        const target = event.currentTarget;
+        const id = target.getAttribute('data-id');
+        if (id) {
+          push( `/place/${id}`);
+        }
+      }, [push]);
     
 
   return (
@@ -48,7 +60,7 @@ const StayListCat:React.FC<rowProps2> = ({rowData}) => {
                                 {
                                     item && item.map((data:StayInfo, index: number ) => {
                                         return (
-                                            <div className='p-[20px] w-[calc(50%-1px)] flex gap-[10px] border-b-[1px] border-solid border-[#ddd] odd:border-r-[1px] odd:border-solid odd:border-[#ddd]' key={data.contentid}>
+                                            <div className='p-[20px] w-[calc(50%-1px)] flex gap-[10px] border-b-[1px] border-solid border-[#ddd] odd:border-r-[1px] odd:border-solid odd:border-[#ddd] cursor-pointer' key={data.contentid}  onClick={handleClick} data-id={data.contentid}>
                                                 <div className='w-full max-w-[140px] h-[168px] relative  '>
                                                     <div
                                                         className='w-full h-full relative bg-cover bg-center'

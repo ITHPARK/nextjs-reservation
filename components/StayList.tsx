@@ -1,7 +1,8 @@
 "use client"
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {StayInfo, rowProps} from '@/types/types';
+import {useRouter} from 'next/navigation'
 
 
 
@@ -9,9 +10,19 @@ const StayList:React.FC<rowProps> = ({rowData}) => {
 
     const [data, setData] = useState<StayInfo[]>([]);
 
+    const {push} = useRouter();
+
     useEffect(() => {
       setData(rowData)
     }, [rowData])
+    
+    const handleClick: React.MouseEventHandler<HTMLDivElement> =  useCallback((event) => {
+        const target = event.currentTarget;
+        const id = target.getAttribute('data-id');
+        if (id) {
+          push( `/place/${id}`);
+        }
+      }, [push]);
     
 
   return (
@@ -20,7 +31,7 @@ const StayList:React.FC<rowProps> = ({rowData}) => {
             {
                data.length > 0 && data.map((item: StayInfo, index: number) => {
                     return (
-                        <div className='p-[20px] w-[calc(50%-1px)] flex gap-[10px] border-b-[1px] border-solid border-[#ddd] odd:border-r-[1px] odd:border-solid odd:border-[#ddd]' key={item.contentid}>
+                        <div className='p-[20px] w-[calc(50%-1px)] flex gap-[10px] border-b-[1px] border-solid border-[#ddd] odd:border-r-[1px] odd:border-solid odd:border-[#ddd] cursor-pointer' key={item.contentid} onClick={handleClick} data-id={item.contentid}>
                             <div className='w-full max-w-[140px] h-[168px] relative  '>
                                 <div
                                     className='w-full h-full bg-cover bg-center'
