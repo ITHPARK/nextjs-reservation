@@ -25,3 +25,4 @@ export const useStayData = create(
     }  // persist options를 전달해야 함
   )
 );
+

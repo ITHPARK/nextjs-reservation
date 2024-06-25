@@ -5,12 +5,13 @@ import RecentlyView from "@/components/RecentlyView";
 import HotDeal from "@/components/Rows";
 import { fetchData } from "@/api/fetchData";
 import request from "@/api/request"
+import HotDealAll from '@/components/HotDealAll'
 
 const List = () => {
 
   return (
-    <div className="w-full pt-[140px]" >
-     
+    <div className="w-full pt-[50px]" >
+      <HotDealAll/>
     </div>
   );
 }

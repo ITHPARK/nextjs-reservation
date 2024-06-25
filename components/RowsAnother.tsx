@@ -8,7 +8,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import { StayInfo, RowsAnotherProps } from '@/types/types';
-
+import {useRouter} from 'next/navigation'
 
 
 
@@ -16,6 +16,8 @@ import { StayInfo, RowsAnotherProps } from '@/types/types';
 const RowsAnother:React.FC<RowsAnotherProps> = ({
   topStay
 }) => {
+
+  const {push} = useRouter();
 
   //숙소 이름 말줄임표 처리
   const truncateTitle = (title: string, maxLength: number) => {
@@ -25,7 +27,15 @@ const RowsAnother:React.FC<RowsAnotherProps> = ({
     return title;
   };
 
-  const bulletText = ["서울 Top6 숙소", "서울 인기있는 숙소", "서울 방문 많은 숙소", "좋아요 많은 숙소"]
+  const bulletText = ["Top6 숙소", "인기있는 숙소", "방문 많은 숙소", "좋아요 많은 숙소"]
+
+  const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    const target = event.currentTarget;
+    const id = target.getAttribute('data-id');
+    if (id) {
+      push( `/place/${id}`);
+    }
+  };
 
 
   return (
@@ -59,9 +69,9 @@ const RowsAnother:React.FC<RowsAnotherProps> = ({
                     <SwiperSlide key={index}>
                       <div className='flex gap-[10px] flex-wrap'>
                         {
-                          item.map((val) => {
+                          item.map((val, index) => {
                             return(
-                              <div key={val.title} className="w-[calc(50%-5px)] flex gap-[15px]">
+                              <div key={val.title} className="w-[calc(50%-5px)] flex gap-[15px] cursor-pointer" onClick={handleClick} data-id={item[index].contentid}>
                                 <div className='w-[100px] h-[100px] bg-cover bg-center rounded-[5px]' style={{ backgroundImage: `url(${val.firstimage})` }}></div>
                                 <div className='flex-1 flex flex-col justify-between'>
                                     <div>

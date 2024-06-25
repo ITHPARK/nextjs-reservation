@@ -42,8 +42,6 @@ export const fetchData = async (fetchUrl: FetchUrl, areacode?: number) => {
             list.firstimage = "/images/no_image.png";
           }
 
-          const myStay: StayInfo = { price: '', rating: '' }; // price와 rating을 채운 객체
-
           //평점과 가격을 추가 같이 추가 안하면 하나의 값은 사라짐
           const result = addPrice(list)
           const result2 = addRating(result);

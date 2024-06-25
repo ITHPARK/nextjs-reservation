@@ -9,7 +9,7 @@ import request from "@/api/request"
 const Home = () => {
 
   return (
-    <div className="w-full pt-[140px]" >
+    <div className="w-full pt-[50px]" >
         <Category/>
         <EeventBanner/>
         <RecentlyView/>

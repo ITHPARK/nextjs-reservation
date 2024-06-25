@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useCallback } from 'react'
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 import { BsPeople } from "react-icons/bs";
@@ -131,6 +131,42 @@ const StayResult = () => {
             if (index !== -1) {
                 // 맞는 데이터가 있으면 state에 할당
                 setPlaceData(stayData[index]);
+
+                const isKeyInStorage = (key: string):boolean =>  {
+                    return localStorage.getItem(key)!== null;
+                }
+
+                const array: StayInfo[] | null = [];
+
+                if(isKeyInStorage("recently")) {
+                    
+                    //최근 본 숙소들을 담은 배열
+                    let storedData = localStorage.getItem("recently");
+                    const viewDate = stayData[index];
+
+                    if(storedData) {
+                        let parseData =JSON.parse(storedData)
+
+                        //본 숙소가 중복추가되지 않게 처리
+                        const idx = parseData.findIndex((stay: StayInfo) => stay.contentid === stayData[index].contentid)
+
+                        if(idx == -1) {
+                            parseData.push(viewDate); 
+                            localStorage.setItem("recently", JSON.stringify(parseData));
+                            console.log(storedData);
+                        }
+                    }
+                }else {
+                    //데이터가 없으면 빈배열 추가 (로컬스토리지에는 문자열 형식의 값을 저장할 수 있다. 배열을 저장하려면 JSON.stringfy로 배열을 문자열로 변환해줘야함)
+                    localStorage.setItem("recently", JSON.stringify(array));
+                    
+                }
+
+                
+
+                
+                
+                
             } else {
                 // 맞는 데이터가 없는경우  = -1 리턴했을 때
                 console.log("정보 없음");
@@ -203,7 +239,7 @@ const StayResult = () => {
     }, [pickerStartDate, pickerEndDate])
 
 
-    const calculateNights = (startDate: Date | null, endDate: Date | null): number => {
+    const calculateNights =(startDate: Date | null, endDate: Date | null): number => {
         if (!startDate || !endDate) return 0;
   
         //밀리초 숫자 단위로 나누고 뺀다
@@ -317,13 +353,13 @@ const StayResult = () => {
                                 </div>
                                 <p className='mb-[20px] text-[12px] text-[#6d6d6d]'>체크인 15:00 ~ 체크아웃 11:00</p>
                                 <div className='flex flex-col justify-end'>
-                                    <p className='text-right '><span className='text-[14px]'>2.1%</span> <span className='text-[14px] relative after:content-[""] after:w-[110%] after:h-[1px] after:bg-[#1a1a1a] after:absolute after:left-[50%] after:top-[50%] after:translate-x-[-50%] after:translate-y-[-50%]'>200,000</span></p>
+                                    <p className='text-right '><span className='inline-block mr-[5px] text-[14px]'>{placeData ? `${Math.floor(100 - (Number(placeData.price.replace(/,/g, "")) / 200000) * 100) }%`  : ""}</span> <span className='text-[14px] relative after:content-[""] after:w-[110%] after:h-[1px] after:bg-[#1a1a1a] after:absolute after:left-[50%] after:top-[50%] after:translate-x-[-50%] after:translate-y-[-50%]'>200,000</span></p>
                                     <p className='flex justify-end text-[18px] font-[600]'>{placeData ? placeData.price : ''}원 <button className='w-[18px] inline-block '><IoMdInformationCircleOutline size="100%"  /></button></p>
                                     <p className='flex justify-end text-[12px] text-[#6D6D6D]'>취소 및 환불 불가 <button className='w-[16px]'><IoMdInformationCircleOutline size="100%" /></button></p>
                                 </div>
                                 <div className='mt-[15px] flex justify-end gap-[10px]'>
                                     <button className='w-[32px] p-[5px] inline-block border-[1px] border-solid border-[#b1b1b1] rounded-[4px] '><LuShoppingCart size="100%" color='#000'/></button>
-                                    <button className='min-w-[120px] bg-[#d20d5a] text-[12px] text-[#fff] rounded-[3px]'  onClick={handleClickReservation}>예약하기</button>
+                                    <button className='min-w-[120px] bg-[#0f2edb] text-[12px] text-[#fff] rounded-[3px]'  onClick={handleClickReservation}>예약하기</button>
                                 </div>
                             </div>
                         </div>

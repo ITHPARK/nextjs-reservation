@@ -35,7 +35,7 @@ const Exhibition = () => {
   return (
     <section className='px-[20px] mb-[50px]'>
         <div className='mb-4  flex justify-between items-center font-semibold '>
-            <h2 className='text-[18px] text-[#1a1a1a]'>야놀자 특가</h2>
+            <h2 className='text-[18px] text-[#1a1a1a]'>특가 상품</h2>
             <Link href="" className='text-[12px] text-[#0152cc] font-semibold'>전체보기</Link>
         </div>
         <div className='relative'>

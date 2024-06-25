@@ -32,7 +32,7 @@ const HotDeal = () => {
   return (
     <section className=' mb-[50px] px-[20px]'>
          <div className='mb-4  flex justify-between items-center font-semibold '>
-            <h2 className='text-[18px] text-[#1a1a1a]'>야놀자 특가</h2>
+            <h2 className='text-[18px] text-[#1a1a1a]'>핫딜</h2>
             <span className='text-[12px] text-[#0152cc] font-semibold cursor-pointer' onClick={onClickViewAll}>전체보기</span>
         </div>
         <Rows

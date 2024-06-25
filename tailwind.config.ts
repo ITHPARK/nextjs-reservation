@@ -22,7 +22,7 @@ const config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stopzs))",
         "gradient-conic":
         "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "custom-gradient" : "linear-gradient(90deg, #5177f0, #a46dc5 33.5%, #fb5a90 67.5%, #ff3478)",
+        "custom-gradient" : "linear-gradient(90deg, #5177f0, #a46dc5 33.5%, #fb5a90 57.5%, #0f2edb)",
         "custom-gradient2" : "linear-gradient(180deg,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 40%,rgba(0,0,0,.8))"
       },
       backgroundColor: {
