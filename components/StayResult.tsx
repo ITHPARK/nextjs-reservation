@@ -5,9 +5,9 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 import { BsPeople } from "react-icons/bs";
 import { MdOutlineBedroomChild } from "react-icons/md";
-import {StayInfo} from "@/types/types";
-import { useStayData } from '@/store/store';
-import { usePathname } from 'next/navigation'
+import {StayInfo, AddCartInfo} from "@/types/types";
+import { useStayData, useCart } from '@/store/store';
+import { usePathname, useRouter } from 'next/navigation'
 import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
 import { IoShareSocialOutline  } from "react-icons/io5";
@@ -37,11 +37,15 @@ import ReservationAlert from "@/components/ReservationAlert";
 const StayResult = () => {
 
     const [placeData, setPlaceData] = useState<StayInfo | null>(null);
-    const [likeState, setLikeState] = useState(true);
+    const [likeState, setLikeState] = useState<boolean>(true);
+
+    const [stayCart, setStayCart]  = useState<AddCartInfo | null>(null);
 
     //store에서 가져온 값
     const { stayData } = useStayData();
-    const pathname = usePathname();
+    const { cart, setCart } = useCart();
+
+    const pathname : string = usePathname();
     
     //ref는 html 엘레먼트이므로 HTMLDivElement 타입을 준다.
     const sizeRef = useRef<HTMLDivElement>(null);
@@ -57,18 +61,20 @@ const StayResult = () => {
 
     const [buttonStartDate, setButtonStartDate] = useState<string>();
     const [buttonEndDate, setButtonEndDate] = useState<string>();
-    const [night, setNight] = useState(0);
+    const [night, setNight] = useState<number>(0);
 
     //shadcn 컴포넌트 트리거 각각 나누기
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
     //인원수 선택
-    const [adult, setAdult] = useState(2);
-    const [child, setChild] = useState(0);
+    const [adult, setAdult] = useState<string>("2");
+    const [child, setChild] = useState<string>("0");
 
     //예약날짜가 오늘인지 비교해서 모달 열기
-    const [isOpen, setIsOpen] = useState(false)
-    const [modalControl, setModalControl] = useState(2);
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [modalControl, setModalControl] = useState<number>(2);
+
+    const {push} = useRouter();
 
 
      //tailwind css 동적할당을 위한 객체
@@ -77,41 +83,8 @@ const StayResult = () => {
          1: 'flex opacity-[1]',
          2: 'hidden opacity-[0]',
      };
- 
-
-
-    const handleClickReservation = () => {
-        const today = new Date();
-
-        if (pickerStartDate) {
-            //년 월 일을 모두 비교
-            const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
-            const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
-            const isSameDay = today.getDate() === pickerStartDate.getDate();
-
-            if (isSameYear && isSameMonth && isSameDay) {
-                setIsOpen(true);
-                setModalControl(1);
-            } else {
-                setIsOpen(false);
-                setModalControl(2);
-            }
-        }
-    }
-
-
-
-    const resizeListener = () => {
-        // DrawerContent가 렌더링된 후에 ref를 확인한다.
-        const currentRef = sizeRef.current;
-        
-        //margin-left로 줄 값
-        setRefSize((currentRef?.offsetWidth || 0) / 2);
-    };
- 
 
     
-
     useEffect(() => {
 
         //문자열에서 정규식에 일치하는 것을 찾기
@@ -165,15 +138,11 @@ const StayResult = () => {
                 }else {
                     //데이터가 없으면 빈배열 추가 (로컬스토리지에는 문자열 형식의 값을 저장할 수 있다. 배열을 저장하려면 JSON.stringfy로 배열을 문자열로 변환해줘야함)
                     localStorage.setItem("recently", JSON.stringify(array));
-                    
                 }
-
-                
             } else {
                 // 맞는 데이터가 없는경우  = -1 리턴했을 때
                 console.log("정보 없음");
             }
-
         }
     
     },[stayData]);
@@ -185,13 +154,11 @@ const StayResult = () => {
         const currentRef = sizeRef.current;
         setRefSize((currentRef?.offsetWidth || 0) / 2);
 
-
         window.addEventListener("resize", resizeListener);
 
         return () => {
            window.removeEventListener("resize", resizeListener);
         };
-        
 
     }, [sizeRef.current, refSize]);
 
@@ -253,12 +220,74 @@ const StayResult = () => {
         return Math.ceil(Math.max(daysDifference, 0)); 
     };
     
-
-   
-
     const handleLike = () => {
         setLikeState(prev => !prev);
     }
+
+    //마우스 이벤트를 처리하는 함수의 타입
+    const handleClickCart = (data: StayInfo | null,  buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+
+        if( buttonStartDate && buttonEndDate) {
+
+            //장바구니에 담았을 때 저장할 정보들
+            let cartInfo: AddCartInfo ={
+                data,
+                buttonStartDate,
+                buttonEndDate,
+                night,
+                adult,
+                child
+            }
+        
+            //store에 추가하기 위해서 객체를 배열에 넣어줌
+            const arr = [...cart];
+            arr.push(cartInfo);
+            setCart(arr);
+
+            if(Number(adult) || Number(child)){
+                if(confirm("장바구니에 추가되엇습니다.\n장바구니로 이동하시겠습니까?")) {
+                    push("/cart");
+                }else {
+                    return false;
+                }
+            }else {
+                alert("인원수를 선택해주세요");
+            }
+
+           
+        }else {
+            alert("예약 날짜를 선택해주세요");
+            return false;
+        }
+    };
+
+    const handleClickReservation = () => {
+        const today = new Date();
+
+        if (pickerStartDate) {
+            //년 월 일을 모두 비교
+            const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
+            const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
+            const isSameDay = today.getDate() === pickerStartDate.getDate();
+
+            if (isSameYear && isSameMonth && isSameDay) {
+                setIsOpen(true);
+                setModalControl(1);
+            } else {
+                setIsOpen(false);
+                setModalControl(2);
+            }
+        }
+    }
+
+    const resizeListener = () => {
+        // DrawerContent가 렌더링된 후에 ref를 확인한다.
+        const currentRef = sizeRef.current;
+        
+        //margin-left로 줄 값
+        setRefSize((currentRef?.offsetWidth || 0) / 2);
+    };
+ 
 
 
   return (
@@ -360,7 +389,7 @@ const StayResult = () => {
                                     <p className='flex justify-end text-[12px] text-[#6D6D6D]'>취소 및 환불 불가 <button className='w-[16px]'><IoMdInformationCircleOutline size="100%" /></button></p>
                                 </div>
                                 <div className='mt-[15px] flex justify-end gap-[10px]'>
-                                    <button className='w-[32px] p-[5px] inline-block border-[1px] border-solid border-[#b1b1b1] rounded-[4px] '><LuShoppingCart size="100%" color='#000'/></button>
+                                    <button className='w-[32px] p-[5px] inline-block border-[1px] border-solid border-[#b1b1b1] rounded-[4px]' onClick={handleClickCart(placeData, buttonStartDate, buttonEndDate, night, adult, child )}><LuShoppingCart size="100%" color='#000'/></button>
                                     <button className='min-w-[120px] bg-[#0f2edb] text-[12px] text-[#fff] rounded-[3px]'  onClick={handleClickReservation}>예약하기</button>
                                 </div>
                             </div>

@@ -19,13 +19,13 @@ export const useStayData = create(
         }
       },
     }),
+    // persist options를 전달해야 함
     {
       name: "useStayData",
       getStorage: () => sessionStorage,  // localStorage 또는 sessionStorage를 선택하여 사용
-    }  // persist options를 전달해야 함
+    }  
   )
 );
-
 
 
 export const useTopStay= create<TopStayStore>(
@@ -35,4 +35,14 @@ export const useTopStay= create<TopStayStore>(
       set({ topStay: arr });
     }
   })
+);
+
+
+export const useCart = create<unknown>(
+  (set) => ({
+    cart: [],
+    setCart: (info: any) => {
+      set({ cart: info });
+    }
+  })  
 );

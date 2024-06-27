@@ -8,18 +8,29 @@ import Link from 'next/link';
 import {usePathname,  useRouter} from 'next/navigation';
 import { useStayData } from '@/store/store';
 import {StayInfo} from "@/types/types";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
+import { IoClose, IoHomeOutline } from "react-icons/io5";
+
 
 const Header = () => {
 
     const [headerY, setHeaderY] = useState(0);
     const [border, setBorder] = useState(false);
     const [placeData, setPlaceData] = useState<StayInfo | null>(null);
-    const [headerTit, setHeaderTit] = useState<String>("")
+    const [headerTit, setHeaderTit] = useState<String | number>("")
     
     const { stayData } = useStayData();
 
     const pathname = usePathname();
     const router = useRouter();
+    const {push} = useRouter();
 
     const onScroll = () => {
         setHeaderY(window.scrollY);
@@ -75,32 +86,37 @@ const Header = () => {
     })
 
     useEffect(() => {
-
-        
         if(pathname === "/recommend/list"){
             setHeaderTit("핫딜");
         }else if(pathname === "/recommend/ranking") {
             setHeaderTit("TOP 숙소");
         }else if(pathname === "/recommend/recently") {
             setHeaderTit("최근 본 숙소");
+        }else if(pathname === "/cart"){
+            setHeaderTit("장바구니");
         }
     }, [pathname])
 
     const handleClickBack = () => {
         router.back();
     }
+
     
-    
+
 
   return (
     <header className={`w-full h-20 fixed transform transition-all duration-1000 bg-[#fff] z-20 after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-[-1px] after:left-[0] after:bg-custom-gradient after-transition ${border ? "after:opacity-100" : "after:opacity-0"}`}>
+
+        <Drawer direction='left' >
+
+       
         <div className='w-[768px] h-full mx-auto  flex align-center'>
 
             {/* 네비게이션 바 */}
             <nav className='w-full flex justify-between items-center relative gap-[15px] '>
                 {
                     pathname === "/"? 
-                        <RxHamburgerMenu size={32} fill='#000' className='p-[5px] cursor-pointer'/>
+                        <DrawerTrigger><RxHamburgerMenu size={32} fill='#000' className='p-[5px] cursor-pointer'/></DrawerTrigger>
                     :
                         <IoIosArrowBack size={32} fill='#000' className='p-[3px] cursor-pointer' onClick={handleClickBack}/>
                 }
@@ -128,16 +144,34 @@ const Header = () => {
                 </div>
         
                
+                {
+                    pathname === "/cart"? 
+                    <IoHomeOutline size={32} color='#000' className='p-[5px] cursor-pointer' onClick={() => {push("/")}} />
+                    :
+                    <LuShoppingCart size={32} color='#000' className='p-[5px] cursor-pointer' onClick={() => {push("/cart")}}/>
+                }
                 
-                <LuShoppingCart size={32} color='#000' className='p-[5px]'/>
             </nav>
 
             {/* 디테일 페이지 */}
-            <div className='hidden'>
-                
+            <div className='hidden'> 
             </div>
-
         </div>
+
+
+        <DrawerContent className='pt-[60px] w-[60%] min-w-[500px] h-[100vh] rounded-[0] menu-pop'>
+            <DrawerClose className='w-[24px] absolute right-[20px] top-[20px]'>
+                <IoClose size="100%" fill='#1a1a1a'/>
+            </DrawerClose>
+            <DrawerDescription>
+                <ul>
+                    <li className='px-[20px] '>
+                        <Link href="" className='py-[10px] w-full block text-[18px] text-[#1a1a1a] font-[600] border-b-[1px] border-[#f2f2f2]'>예약내역</Link>
+                    </li>
+                </ul>
+            </DrawerDescription>
+        </DrawerContent>
+        </Drawer>
     </header>
   )
 }

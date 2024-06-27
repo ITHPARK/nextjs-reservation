@@ -23,6 +23,32 @@ import { IoMdInformationCircle } from "react-icons/io";
 
 const GuestsNumber: React.FC<GuestsNumberProps> = ({refSize, adult, child, setAdult, setChild}) => {
 
+
+  const handClickPeople = (cat: string, button: boolean, set: number)  => {
+
+    if(cat === "adult") {
+      calc(button, set, setAdult);
+    }else if(cat === "child")  {
+      calc(button, set, setChild);
+    }
+  }
+
+  const calc = (button: boolean, num: number, setter: React.Dispatch<React.SetStateAction<string>> ) => {
+    let peopleNum = num;
+    
+    if(button) {
+      peopleNum += 1
+      setter(String(peopleNum))
+      
+      
+    }else {
+      if(peopleNum > 0) {
+        peopleNum -= 1
+        setter(String(peopleNum))
+      }
+    }
+  }
+
   
   
 
@@ -47,17 +73,17 @@ const GuestsNumber: React.FC<GuestsNumberProps> = ({refSize, adult, child, setAd
                 <div className='flex justify-between'>
                     <p className='text-[14px] color-[#1a1a1a] font-[600]'>성인</p>
                     <div className='flex items-center gap-[8px]'>
-                      <button onClick={() => {setAdult((prev) => prev -= 1)}}><img src="/images/minus.svg" alt="" /></button>
+                      <button onClick={() => handClickPeople("adult", false, Number(adult))}><img src="/images/minus.svg" alt="" /></button>
                       <span className='text-[14px] font-[600]'>{adult}</span>
-                      <button onClick={() => {setAdult((prev) => prev += 1)}}><img src="/images/plus.svg" alt="" /></button>
+                      <button onClick={() => handClickPeople("adult", true, Number(adult))}><img src="/images/plus.svg" alt="" /></button>
                     </div>
                 </div>
                 <div className='flex justify-between'>
                     <p className='text-[14px] color-[#1a1a1a] font-[600]'>아동</p>
                     <div className='flex items-center gap-[8px]'>
-                      <button onClick={() => {setChild((prev) => prev -= 1)}}><img src="/images/minus.svg" alt="" /></button>
+                      <button onClick={() => handClickPeople("child", false, Number(child))}><img src="/images/minus.svg" alt="" /></button>
                       <span className='text-[14px] font-[600]'>{child}</span>
-                      <button onClick={() => {setChild((prev) => prev += 1)}}><img src="/images/plus.svg" alt="" /></button>
+                      <button onClick={() => handClickPeople("child", true, Number(child))}><img src="/images/plus.svg" alt="" /></button>
                     </div>
                 </div>
             </div> 

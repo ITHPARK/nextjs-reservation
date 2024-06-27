@@ -15,7 +15,7 @@ import { IoPauseOutline } from "react-icons/io5";
 const EventBanner = () => {
 
     const eventList = [1, 2, ,3, 4, 5];
-    const eventBanner = ["야놀자드로우", "쿠폰혜택모음", "이벤트더보기"];
+    const eventBanner = ["이번달혜택", "쿠폰혜택모음", "이벤트더보기"];
     const [isPlaying, setIsPlaying] = useState(true);
 
     //DOM 요소에 직접 접근하기 위함

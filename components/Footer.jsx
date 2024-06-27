@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className='p-[20px] pb-[50px] bg-[#f2f2f2]'>
-        <div className='w-full mb-[20px]'>
+    <footer className='p-[20px] pb-[50px] min-h-[300px] flex justify-center items-center bg-[#f2f2f2]'>
+        {/* <div className='w-full mb-[20px]'>
             <img src="/images/ico_footer.svg" alt="로고" />
         </div>
         <p className='mb-[20px] text-[11px] text-[#6d6d6d] leading-[1.6] tracking-[-0.025em]'>
@@ -45,7 +45,10 @@ const Footer = () => {
         <p className=' text-[#6d6d6d] leading-[1.6]'>
             (주) 야놀자는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.<br /> <br />
             (주)야놀자가 소유/운영/관리하는 웹사이트 및 앱 내의 상품/판매자/이벤트 정보, 디자인 및 화면의 구성, UI를 포함하여 일체의 콘텐츠에 대한 무단 복제, 배포, 방송 또는 전송, 스크래핑 등의 행위는 저작권법 및 콘텐츠산업 진흥법 등 관련 법령에 의하여 엄격히 금지 됩니다.
-        </p>
+        </p> */}
+        <span className='text-[18px]'>
+            copyright (c)
+        </span>
     </footer>
   )
 }

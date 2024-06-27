@@ -75,9 +75,18 @@ export interface DatePickerCustomProps {
 
 export interface GuestsNumberProps {
   refSize?: number;
-  adult?: number;
-  child?: number;
-  setAdult: React.Dispatch<React.SetStateAction<number>>;
-  setChild: React.Dispatch<React.SetStateAction<number>>;
+  adult?: string;
+  child?: string;
+  setAdult: React.Dispatch<React.SetStateAction<string>>;
+  setChild: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface AddCartInfo  {
+  data: StayInfo | null;
+  buttonStartDate: string | undefined;
+  buttonEndDate: string | undefined;
+  night: number;
+  adult: string;
+  child: string;
 }
 

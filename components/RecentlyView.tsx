@@ -42,7 +42,7 @@ const RecentlyView:React.FC = () => {
 
           <div className='relative'>
             <Swiper 
-              loop={true} // 슬라이드 루프
+              loop={false} // 슬라이드 루프
               spaceBetween={10} // 슬라이스 사이 간격
               slidesPerView={2.2} // 보여질 슬라이스 수
               navigation={{

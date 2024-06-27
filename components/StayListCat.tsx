@@ -56,6 +56,7 @@ const StayListCat:React.FC<rowProps2> = ({rowData}) => {
                 data.map((item: StayInfo[], index: number) => {
                     return (
                         <div className='' key={`ranking${index}`}>
+                            
                             <TabsContent  value={index === 0 ? "top" : (index === 1 ? "popular" : (index === 2 ? "mostVisit" : (index === 3 ? "mostLike" : "")))} className='mt-0 flex flex-wrap '>
                                 {
                                     item && item.map((data:StayInfo, index: number ) => {
