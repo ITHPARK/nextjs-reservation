@@ -16,7 +16,6 @@ const Home = () => {
         <Category/>
         <EeventBanner/>
         <RecentlyView/>
-        {/* @ts-expect-error Async Server Component */}
         <HotDeal/>
         <Top/>
         <Exhibition/>
