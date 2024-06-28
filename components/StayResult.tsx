@@ -132,7 +132,6 @@ const StayResult = () => {
                             }
 
                             localStorage.setItem("recently", JSON.stringify(parseData));
-                            console.log(storedData);
                         }
                     }
                 }else {
@@ -178,9 +177,9 @@ const StayResult = () => {
             getTime() 메서드를 호출하여 해당 날짜와 시간을 밀리초 단위의 숫자 값으로 반환
             만약 날짜가 유효하지 않다면, getTime()은 NaN을 반환
          */
-        const isValidDate = (date : Date | null) => {
-            return date instanceof Date && !isNaN(date.getTime());
-        };
+            const isValidDate = (date: Date | null): boolean => {
+                return date instanceof Date && !isNaN(date.getTime());
+            };
 
 
         const dateFormatOptions = {
@@ -189,13 +188,12 @@ const StayResult = () => {
            day: '2-digit',   // 일 (2자리 숫자 형식)
         };
 
-        if(isValidDate(start)){
-            //new Intl.DateTimeFormat = JavaScript의 내장 객체 중 하나 날짜 및 시간을 지역화된 형식으로 변환하는 기능
+        //null체크 필요
+        if (start !== null && isValidDate(start)) {
             formattedStartDate = new Intl.DateTimeFormat('ko-KR', dateFormatOptions as {}).format(start);
         }
         
-
-        if(isValidDate(end)) {
+        if (end !== null && isValidDate(end)) {
             formattedEndDate = new Intl.DateTimeFormat('ko-KR', dateFormatOptions as {}).format(end);
         }
 
@@ -208,7 +206,7 @@ const StayResult = () => {
     }, [pickerStartDate, pickerEndDate])
 
 
-    const calculateNights =(startDate: Date | null, endDate: Date | null): number => {
+    const calculateNights = (startDate: Date | null, endDate: Date | null): number =>{
         if (!startDate || !endDate) return 0;
   
         //밀리초 숫자 단위로 나누고 뺀다
@@ -225,9 +223,9 @@ const StayResult = () => {
     }
 
     //마우스 이벤트를 처리하는 함수의 타입
-    const handleClickCart = (data: StayInfo | null,  buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClickCart = (data: StayInfo | null, buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
 
-        if( buttonStartDate && buttonEndDate) {
+        if(data && buttonStartDate && buttonEndDate) {
 
             //장바구니에 담았을 때 저장할 정보들
             let cartInfo: AddCartInfo ={
