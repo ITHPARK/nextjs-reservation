@@ -1,12 +1,12 @@
 "use client"
 
-import React, {useState, useEffect, useRef, useCallback } from 'react'
+import React, {useState, useEffect, useRef } from 'react'
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 import { BsPeople } from "react-icons/bs";
 import { MdOutlineBedroomChild } from "react-icons/md";
-import {StayInfo, AddCartInfo} from "@/types/types";
-import { useStayData, useCart } from '@/store/store';
+import {StayInfo, AddInfo} from "@/types/types";
+import { useStayData, useCart, useReservation } from '@/store/store';
 import { usePathname, useRouter } from 'next/navigation'
 import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
@@ -15,19 +15,9 @@ import { SlPresent } from "react-icons/sl";
 import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-  } from "@/components/ui/drawer"
-  import {
-    AlertDialog,
-    AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog"
+  Drawer,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import DatePickerCustom from "@/components/DatePickerCustom";
 import GuestsNumber from '@/components/GuestsNumber';
 import ReservationAlert from "@/components/ReservationAlert";
@@ -39,11 +29,10 @@ const StayResult = () => {
     const [placeData, setPlaceData] = useState<StayInfo | null>(null);
     const [likeState, setLikeState] = useState<boolean>(true);
 
-    const [stayCart, setStayCart]  = useState<AddCartInfo | null>(null);
-
     //store에서 가져온 값
     const { stayData } = useStayData();
     const { cart, setCart } = useCart();
+    const { reservation, setReservation } = useReservation();
 
     const pathname : string = usePathname();
     
@@ -228,7 +217,7 @@ const StayResult = () => {
         if(data && buttonStartDate && buttonEndDate) {
 
             //장바구니에 담았을 때 저장할 정보들
-            let cartInfo: AddCartInfo ={
+            let cartInfo: AddInfo ={
                 data,
                 buttonStartDate,
                 buttonEndDate,
@@ -262,21 +251,57 @@ const StayResult = () => {
     const handleClickReservation = () => {
         const today = new Date();
 
-        if (pickerStartDate) {
+        console.log(321);
+
+        if (pickerStartDate && pickerEndDate) {
             //년 월 일을 모두 비교
             const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
             const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
             const isSameDay = today.getDate() === pickerStartDate.getDate();
 
-            if (isSameYear && isSameMonth && isSameDay) {
-                setIsOpen(true);
-                setModalControl(1);
-            } else {
-                setIsOpen(false);
-                setModalControl(2);
+            if(pickerStartDate && pickerEndDate) {
+
+                
+
+                if(confirm(`${buttonStartDate} ~ ${buttonEndDate} 날짜로 예약하시겠습니까?`)) {
+                    if (isSameYear && isSameMonth && isSameDay) {
+                        setIsOpen(true);
+                        setModalControl(1);
+                    } else {
+                        setIsOpen(false);
+                        setModalControl(2);
+                        reservations(placeData, buttonStartDate, buttonEndDate, night, adult, child);
+                    }    
+                }else {
+                    return false;
+                }
+
+            }else {
+                alert("날짜를 선택해주세요");
             }
+            
         }
     }
+
+    const reservations = (data: StayInfo | null, buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+        if(data && buttonStartDate && buttonEndDate) {
+
+            //장바구니에 담았을 때 저장할 정보들
+            let reservationInfo: AddInfo ={
+                data,
+                buttonStartDate,
+                buttonEndDate,
+                night,
+                adult,
+                child
+            }
+        
+            //store에 추가하기 위해서 객체를 배열에 넣어줌
+            const arr = [...reservation];
+            arr.push(reservationInfo);
+            setReservation(arr);
+        }
+    } 
 
     const resizeListener = () => {
         // DrawerContent가 렌더링된 후에 ref를 확인한다.
@@ -398,8 +423,6 @@ const StayResult = () => {
         </div>
 
         
-  
-
         {
             isDrawerOpen ?
             <DatePickerCustom 
@@ -421,14 +444,18 @@ const StayResult = () => {
                 setChild = {setChild}
             />
         }
-
-    
         
         </Drawer>
 
         <div className={`w-full h-full ${view[modalControl]} justify-center items-center fixed left-0 top-0 bg-bgModal transition-[all] z-100 `}>
             <ReservationAlert 
                 setModalControl = {setModalControl}
+                data = {placeData}
+                buttonStartDate = {buttonStartDate}
+                buttonEndDate  = {buttonEndDate}
+                night = {night}
+                adult = {adult}
+                child = {child}
             />
         </div>
         

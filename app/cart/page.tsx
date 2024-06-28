@@ -23,7 +23,7 @@ const Home = () => {
   )
 
   return (
-    <div className="w-full pt-[50px]" > 
+    <div className="w-full pt-[100px]" > 
 
 
       <div>

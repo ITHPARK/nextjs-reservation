@@ -12,7 +12,7 @@ import Exhibition from "@/components/Exhibition";
 const Home = () => {
 
   return (
-    <div className="w-full pt-[140px]" >
+    <div className="w-full pt-[80px]" >
         <Category/>
         <EeventBanner/>
         <RecentlyView/>

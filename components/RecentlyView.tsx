@@ -1,11 +1,12 @@
 "use client"
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import Link from 'next/link'
 import {StayInfo} from "@/types/types";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation} from "swiper/modules";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import {useRouter} from "next/navigation";
 
 
 
@@ -14,6 +15,7 @@ const RecentlyView:React.FC = () => {
 
 
   const [recentlyData, setRecentlyData] = useState<StayInfo[]>([]);
+  const {push} = useRouter();
   
   
 
@@ -26,6 +28,14 @@ const RecentlyView:React.FC = () => {
   }
 
   }, [])
+
+  const handleClick: React.MouseEventHandler<HTMLDivElement> =  useCallback((event) => {
+    const target = event.currentTarget;
+    const id = target.getAttribute('data-id');
+    if (id) {
+      push( `/place/${id}`);
+    }
+  }, [push]);
   
 
 
@@ -34,7 +44,7 @@ const RecentlyView:React.FC = () => {
     <section className='mb-[50px] px-[20px]'>
         <div className='mb-4 flex justify-between items-center font-semibold '>
             <h2 className='text-[18px] text-[#1a1a1a]'>최근 본 상품</h2>
-            <Link href="" className='text-[12px] text-[#0152cc] font-semibold'>전체보기</Link>
+            
         </div>
     
         {
@@ -59,7 +69,7 @@ const RecentlyView:React.FC = () => {
                 recentlyData.map((item: StayInfo, index: number) => {
                   if(index <= 10) {
                     return (
-                      <SwiperSlide className='flex  border-[1px] border-solid border-[#ddd] rounded-[8px] overflow-hidden' key={item.contentid}>
+                      <SwiperSlide className='flex  border-[1px] border-solid border-[#ddd] rounded-[8px] overflow-hidden cursor-pointer' key={item.contentid} data-id={item.contentid} onClick={handleClick}>
                         <div className='w-[76px] h-[76px] bg-cover bg-center' style={{backgroundImage: `url(${item.firstimage})`}}>
                           
                         </div>

@@ -14,7 +14,7 @@ import { IoPauseOutline } from "react-icons/io5";
 
 const EventBanner = () => {
 
-    const eventList = [1, 2, ,3, 4, 5];
+    const eventList = [ 2, ,3,  5];
     const eventBanner = ["이번달혜택", "쿠폰혜택모음", "이벤트더보기"];
     const [isPlaying, setIsPlaying] = useState(true);
 
@@ -41,7 +41,7 @@ const EventBanner = () => {
                     className='event_swiper'
                     loop={true} // 슬라이드 루프
                     spaceBetween={10} // 슬라이스 사이 간격
-                    slidesPerView={2.4} // 보여질 슬라이스 수
+                    slidesPerView={2.2} // 보여질 슬라이스 수
                     navigation={{
                         prevEl: '.event_button_prev',
                         nextEl: '.event_button_next',

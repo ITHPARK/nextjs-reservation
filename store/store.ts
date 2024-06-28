@@ -2,7 +2,7 @@ import create from 'zustand';
 import { FetchUrl, Store } from  '@/types/types';
 import {fetchData} from '@/api/fetchData';
 import request from '@/api/request';
-import {StayInfo, TopStayStore, AddCartInfo, StoreCart} from '@/types/types';
+import {TopStayStore, StoreReservation, StoreCart} from '@/types/types';
 import { persist } from "zustand/middleware";
 
 export const useStayData = create(
@@ -46,3 +46,13 @@ export const useCart = create<StoreCart>(
     }
   })  
 );
+
+export const useReservation = create<StoreReservation>(
+  (set) => ({
+    reservation: [],
+    setReservation: (info) => {
+      set({ reservation: info });
+    }
+  })  
+);
+

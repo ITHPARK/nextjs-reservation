@@ -81,7 +81,7 @@ export interface GuestsNumberProps {
   setChild: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export interface AddCartInfo  {
+export interface AddInfo  {
   data: StayInfo | null;
   buttonStartDate: string | undefined;
   buttonEndDate: string | undefined;
@@ -91,8 +91,22 @@ export interface AddCartInfo  {
 }
 
 export interface StoreCart {
-  cart: AddCartInfo[];
-  setCart: (info: AddCartInfo[]) => void;
+  cart: AddInfo[];
+  setCart: (info: AddInfo[]) => void;
+}
+
+export interface StoreReservation {
+  reservation: AddInfo[];
+  setReservation: (info: AddInfo[]) => void;
 }
 
 
+export interface ReservationAlertType {
+  setModalControl: React.Dispatch<React.SetStateAction<number>>;
+  data: StayInfo | null;
+  buttonStartDate: string | undefined;
+  buttonEndDate: string | undefined;
+  night: number;
+  adult: string;
+  child: string;
+}

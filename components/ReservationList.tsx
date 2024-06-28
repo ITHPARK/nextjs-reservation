@@ -1,38 +1,37 @@
 "use client"
 
 import React, {useState, useEffect, useCallback} from 'react'
-import { useCart, useReservation } from '@/store/store';
+import { useReservation } from '@/store/store';
 import {AddInfo} from '@/types/types';
 import {useRouter} from 'next/navigation';
-import { LuShoppingCart } from "react-icons/lu";
+import { IoHomeOutline } from "react-icons/io5";
 
-const CartList = () => {
+const ReservationList = () => {
 
-  const { cart, setCart } = useCart();
   const { reservation, setReservation } = useReservation();
   const {push} = useRouter();
   
-  const [cartList, setCartList] = useState<AddInfo[] | null>(null);
+  const [reservationList, setReservationList] = useState<AddInfo[] | null>(null);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
 
     if (savedCart) {
-      setCart(JSON.parse(savedCart));
+      setReservation(JSON.parse(savedCart));
     }
-  }, [setCart]);
+  }, [setReservation]);
 
   useEffect(() => {
 
     //스토어의 상태가 바뀌면 로컬스토리지도 업데이트
 
-    setCartList(cart);
-    if (cart.length > 0) {
-      localStorage.setItem('cart', JSON.stringify(cart));
+    setReservationList(reservation);
+    if (reservation.length > 0) {
+      localStorage.setItem('cart', JSON.stringify(reservation));
     } else {
       localStorage.removeItem('cart');
     }
-  }, [cart]);
+  }, [reservation]);
 
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> =  useCallback((event) => {
@@ -49,31 +48,15 @@ const CartList = () => {
     event.preventDefault(); 
 
 
-    if(confirm("장바구니에서 삭제하시겠습니까?")) {
-      const newCart = cart.filter((_ : AddInfo, i : number) => i !== index);
-      setCart(newCart)
+    if(confirm("예약 취소 하시겠습니까?")) {
+      const newCart = reservation.filter((_ : AddInfo, i : number) => i !== index);
+      setReservation(newCart)
       alert("예약이 취소 되었습니다.")
     }else {
         return false;
     }
   };
   
-
-  const handleReservation = (event: React.MouseEvent<HTMLButtonElement>, item: AddInfo) => {
-
-    event.stopPropagation(); 
-    event.preventDefault(); 
-
-    if(confirm("예약하시겠습니까?")){
-
-      const arr = [...reservation];
-      arr.push(item);
-      setReservation(arr);
-
-    }else {
-      return false;
-    }
-  }
 
 
   return (
@@ -82,10 +65,10 @@ const CartList = () => {
       {/* <h2 className='mb-[30px] pt-[50px] text-[20px] font-[600] text-center'>예약내역</h2> */}
 
       {
-        cart.length > 0 ? 
+        reservation.length > 0 ? 
         <div className=''>
           {
-            cartList?.map((item: AddInfo, index: number) => {
+            reservationList?.map((item: AddInfo, index: number) => {
               return (
                 <div key={item.data?.contentid} className='flex border-b-[1px] border-solid border-[#ddd] rounded-[5px] cursor-pointer overflow-hidden' onClick={handleClick} data-id={item.data?.contentid}>
                   <div className='w-[100%] max-w-[200px]'>
@@ -100,8 +83,7 @@ const CartList = () => {
                       </div>
                     </div>
                     <div className='flex justify-end gap-[10px]'>
-                      <button className='w-[100%] max-w-[120px] py-[8px] inline-block bg-[#fff] text-[12px] text-[#1a1a1a] border-[1px] border-solid border-[#ddd]  rounded-[3px] ' onClick={(e) => handleCancel(e, index)}>삭제</button>
-                      <button className='w-[100%] max-w-[120px] py-[8px] inline-block bg-[#0f2edb] text-[12px] text-[#fff] rounded-[3px]' onClick={(e) => handleReservation(e, item)}>예약하기</button>
+                      <button className='w-[100%] max-w-[120px] py-[8px] inline-block bg-[#fff] text-[12px] text-[#1a1a1a] border-[1px] border-solid border-[#ddd]  rounded-[3px] ' onClick={(e) => handleCancel(e, index)}>예약취소</button>
                     </div>
                   </div>
                 </div>
@@ -112,7 +94,7 @@ const CartList = () => {
         :
         <div className='flex flex-col items-center'>
           <span className='w-[150px]'>
-           <LuShoppingCart size="100%" color='#ddd' className='p-[5px] ' />
+            <IoHomeOutline size="100%" color='#ddd' className='p-[5px] '/>
           </span>
           <p className='mb-[5px] text-[18px] font-[600]'>예약된 숙소가 없습니다.</p>
           <p className='text-[14px] font-[400]'>원하는 상품을 담아보세요.</p> 
@@ -123,4 +105,4 @@ const CartList = () => {
   )
 }
 
-export default CartList
+export default ReservationList

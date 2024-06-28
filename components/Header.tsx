@@ -19,6 +19,7 @@ import {
 import { IoClose, IoHomeOutline } from "react-icons/io5";
 
 
+
 const Header = () => {
 
     const [headerY, setHeaderY] = useState(0);
@@ -94,6 +95,8 @@ const Header = () => {
             setHeaderTit("최근 본 숙소");
         }else if(pathname === "/cart"){
             setHeaderTit("장바구니");
+        }else if(pathname === "/reservtion") {
+            setHeaderTit("예약 내역");
         }
     }, [pathname])
 
@@ -105,12 +108,12 @@ const Header = () => {
 
 
   return (
-    <header className={`w-full h-20 fixed transform transition-all duration-1000 bg-[#fff] z-20 after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-[-1px] after:left-[0] after:bg-custom-gradient after-transition ${border ? "after:opacity-100" : "after:opacity-0"}`}>
+    <header className={`w-full ${headerY > 1? "h-20" : "h-32" } fixed transform left-0 transition-all duration-1000 bg-[#fff] z-20 after:content-[''] after:w-full after:h-[2px] after:absolute after:bottom-[-1px] after:left-[0] after:bg-custom-gradient after-transition ${border ? "after:opacity-100" : "after:opacity-0"}`}>
 
         <Drawer direction='left' >
 
        
-        <div className='w-[768px] h-full mx-auto  flex align-center'>
+        <div className='w-[100%] h-full mx-auto  flex align-center'>
 
             {/* 네비게이션 바 */}
             <nav className='w-full flex justify-between items-center relative gap-[15px] '>
@@ -122,11 +125,11 @@ const Header = () => {
                 }
                 
                 
-                <div className='flex-1 relative h-full'>
-                    <div className={`w-full text-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${headerY > 1 ? "top-[-76px]" : "top-0" } ${pathname =='/' ? "" : "hidden" } bg-[#fff] `}>
-                        <div className="pt-8 pb-4 w-[200px] inline-block relative" >
+                <div className='flex-1 relative h-full flex items-center'>
+                    <div className={`w-full text-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500  bg-[#fff] `}>
+                        {/* <div className="pt-8 pb-4 w-[200px] inline-block relative" >
                             <img src="/images/logo_yanolja.png" alt="" />
-                        </div>
+                        </div> */}
                         <div className={`w-full h-[44px] flex justify-center items-center text-left  rounded-[25px]  ${headerY > 1 ? "bg-tarnparent" : "bg-custom-gradient" }`}>
                             <Link href="" className={`w-[calc(100%-4px)] h-[calc(100%-4px)] flex items-center rounded-[25px] px-[20px] ${headerY > 1 ? "bg-[#f8f8f8]":"bg-[#fff]"}`}>
                                 <IoIosSearch size={32} color="#8a8a8a" className='p-[5px]'/>
@@ -159,15 +162,16 @@ const Header = () => {
         </div>
 
 
-        <DrawerContent className='pt-[60px] w-[60%] min-w-[500px] h-[100vh] rounded-[0] menu-pop'>
+        <DrawerContent className='pt-[60px] w-[60%] min-w-[500px] h-[100vh] rounded-[0] menu-pop' >
             <DrawerClose className='w-[24px] absolute right-[20px] top-[20px]'>
                 <IoClose size="100%" fill='#1a1a1a'/>
             </DrawerClose>
             <DrawerDescription>
                 <ul>
-                    <li className='px-[20px] '>
-                        <Link href="" className='py-[10px] w-full block text-[18px] text-[#1a1a1a] font-[600] border-b-[1px] border-[#f2f2f2]'>예약내역</Link>
-                    </li>
+                    <li className='px-[20px]' onClick={() => {push("/reservation")}}>
+                        <span  className='py-[10px] w-full block text-[18px] text-[#1a1a1a] font-[600] border-b-[1px] border-[#f2f2f2]'>예약내역</span>
+                        
+                    </li>                                                               
                 </ul>
             </DrawerDescription>
         </DrawerContent>
