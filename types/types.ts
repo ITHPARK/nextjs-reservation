@@ -90,3 +90,9 @@ export interface AddCartInfo  {
   child: string;
 }
 
+export interface StoreCart {
+  cart: AddCartInfo[];
+  setCart: (info: AddCartInfo[]) => void;
+}
+
+
