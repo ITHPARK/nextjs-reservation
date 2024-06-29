@@ -390,7 +390,7 @@ const StayResult = () => {
                                 <ul>
                                     <li className='flex items-center gap-[8px]'>
                                         <span className='block w-[18px]'><BsPeople size="100%" fill="#6d6d6"/></span>
-                                        <p className='text-[#6d6d6] text-[14px]'>기준 2인 / 최대 2인</p>
+                                        <p className='text-[#6d6d6] text-[14px]'></p>
                                     </li> 
                                     <li className='flex items-center gap-[8px]'>
                                         <span className='block w-[18px]'><MdOutlineBedroomChild size="100%" fill="#6d6d6" /></span>
