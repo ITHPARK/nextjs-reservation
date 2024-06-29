@@ -67,7 +67,7 @@ const StayListCat:React.FC<rowProps2> = ({rowData}) => {
                                                         className='w-full h-full relative bg-cover bg-center'
                                                         style={{ backgroundImage: `url(${data.firstimage})` }}
                                                     >
-                                                        <span className=' w-[15px] h-[15px] flex justify-center items-center  text-[12px] text-[#fff] font-[600] bg-[#000]'>{index}</span>
+                                                        <span className=' w-[15px] h-[15px] flex justify-center items-center  text-[12px] text-[#fff] font-[600] bg-[#000]'>{index+1}</span>
                                                     </div>
                                                 </div>
                                                 <div className='flex-1 flex flex-col justify-between'>

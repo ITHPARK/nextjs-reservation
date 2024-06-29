@@ -113,7 +113,7 @@ const Header = () => {
         <Drawer direction='left' >
 
        
-        <div className='w-[100%] h-full mx-auto  flex align-center'>
+        <div className='w-[100%] max-w-[768px] h-full mx-auto  flex align-center'>
 
             {/* 네비게이션 바 */}
             <nav className='w-full flex justify-between items-center relative gap-[15px] '>
