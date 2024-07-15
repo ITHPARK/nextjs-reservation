@@ -169,7 +169,7 @@ const Header = () => {
             <DrawerDescription>
                 <ul>
                     <li className='px-[20px]' onClick={() => {push("/reservation")}}>
-                        <span  className='py-[10px] w-full block text-[18px] text-[#1a1a1a] font-[600] border-b-[1px] border-[#f2f2f2]'>예약내역</span>
+                        <span  className='py-[10px] w-full block text-[18px] text-[#1a1a1a] font-[600] border-b-[1px] border-[#f2f2f2] cursor-pointer'>예약내역</span>
                         
                     </li>                                                               
                 </ul>

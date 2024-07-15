@@ -3,11 +3,16 @@
 import React from 'react'
 import {ReservationAlertType, AddInfo} from "@/types/types"
 import { useReservation } from '@/store/store';
+import { useRouter} from 'next/navigation';
+
 
 
 const ReservationAlert:React.FC<ReservationAlertType> =({setModalControl, data, buttonStartDate, buttonEndDate, night, adult, child }) => {
 
   const { reservation, setReservation } = useReservation();
+
+  const {push} = useRouter();
+
   const handleClick = () => {
 
     //장바구니에 담았을 때 저장할 정보들
@@ -24,6 +29,9 @@ const ReservationAlert:React.FC<ReservationAlertType> =({setModalControl, data, 
     const arr = [...reservation];
     arr.push(reservationInfo);
     setReservation(arr);
+    alert("예약되었습니다!")
+    setModalControl(2);
+    push("/reservation");
   }
 
   return (

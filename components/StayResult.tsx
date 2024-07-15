@@ -248,42 +248,8 @@ const StayResult = () => {
         }
     };
 
-    const handleClickReservation = () => {
-        const today = new Date();
+    const reservations = (data: StayInfo | null, buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => {
 
-        console.log(321);
-
-        if (pickerStartDate && pickerEndDate) {
-            //년 월 일을 모두 비교
-            const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
-            const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
-            const isSameDay = today.getDate() === pickerStartDate.getDate();
-
-            if(pickerStartDate && pickerEndDate) {
-
-                
-
-                if(confirm(`${buttonStartDate} ~ ${buttonEndDate} 날짜로 예약하시겠습니까?`)) {
-                    if (isSameYear && isSameMonth && isSameDay) {
-                        setIsOpen(true);
-                        setModalControl(1);
-                    } else {
-                        setIsOpen(false);
-                        setModalControl(2);
-                        reservations(placeData, buttonStartDate, buttonEndDate, night, adult, child);
-                    }    
-                }else {
-                    return false;
-                }
-
-            }else {
-                alert("날짜를 선택해주세요");
-            }
-            
-        }
-    }
-
-    const reservations = (data: StayInfo | null, buttonStartDate: string | undefined, buttonEndDate: string | undefined, night: number, adult: string, child: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
         if(data && buttonStartDate && buttonEndDate) {
 
             //장바구니에 담았을 때 저장할 정보들
@@ -299,9 +265,41 @@ const StayResult = () => {
             //store에 추가하기 위해서 객체를 배열에 넣어줌
             const arr = [...reservation];
             arr.push(reservationInfo);
+            
             setReservation(arr);
         }
     } 
+
+    const handleClickReservation = () => {
+        const today = new Date();
+
+        console.log(321);
+
+        if (pickerStartDate && pickerEndDate) {
+            //년 월 일을 모두 비교
+            const isSameYear = today.getFullYear() === pickerStartDate.getFullYear();
+            const isSameMonth = today.getMonth() === pickerStartDate.getMonth();
+            const isSameDay = today.getDate() === pickerStartDate.getDate();
+
+            if(confirm(`${buttonStartDate} ~ ${buttonEndDate} 날짜로 예약하시겠습니까?`)) {
+                if (isSameYear && isSameMonth && isSameDay) {
+                    setIsOpen(true);
+                    setModalControl(1);
+                } else {
+                    reservations(placeData, buttonStartDate, buttonEndDate, night, adult, child);
+                    setIsOpen(false);
+                    setModalControl(2);
+                    alert("예약되었습니다!")
+                    push("/reservation");
+                }    
+            }else {
+                return false;
+            }
+        }else {
+            alert("날짜를 선택해주세요");
+        }
+    }
+
 
     const resizeListener = () => {
         // DrawerContent가 렌더링된 후에 ref를 확인한다.
