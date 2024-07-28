@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "hooks/addPricets", "components/ReservationAlert.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "hooks/addPricets", "components/ReservationAlert.jsx","env.d.ts"] ,
   "exclude": ["node_modules"]
 }

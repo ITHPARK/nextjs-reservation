@@ -2,8 +2,8 @@ import {FetchUrl, ApiResponse, StayInfo} from '@/types/types';
 import {addRating, addPrice} from "@/hooks/addInfo";
 
  
-const baseUrl:string = "https://apis.data.go.kr/B551011/KorService1/"
-const apiKey:string = "IX0c2Gu6RtHnNRi9a%2FuQ2rn0XyAMW9qgf4LVog5flz9mgTGcmhTpxtjCajWzwhpdKk0jJpAOA4%2B28F280wQHfA%3D%3D";
+const baseUrl:string = "https://apis.data.go.kr/B551011/KorService1/";
+const apiKey: string = process.env.NEXT_APP_API_KEY;
 
 
 //areacode?: number => ?는 선택적인 파라미터. 즉 없어도 됨
